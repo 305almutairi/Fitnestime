@@ -153,7 +153,7 @@ view.addEventListener('toggle',e=>{const dt=e.target,f=dt.querySelector&&dt.quer
  if(dt.open){view.querySelectorAll('details[open]').forEach(o=>{if(o!==dt)o.open=false});cancelAnimationFrame(raf);cur=f;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches)draw(f,1);else raf=requestAnimationFrame(loop)}
  else if(cur===f){cancelAnimationFrame(raf);cur=null}},true);
-const today=[6,0,1,2,3,4,5][new Date().getDay()]; // السبت=0
+const today=(new Date().getDay()+1)%7; // السبت=0، الأحد=1 ... الجمعة=6
 function show(i){
  [...tabs.children].forEach((b,j)=>b.setAttribute('aria-selected',j===i));
  const d=D[i];let h='<section class="day"><h2>'+(d.rest?d.n+': '+d.t:d.n+' — '+d.t)+'</h2><p class="sub">'+d.s+'</p>';
