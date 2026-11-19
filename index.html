@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>برنامج الحديد – Technogym</title>
+<link href="https://fonts.googleapis.com/css2?family=Changa:wght@500;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#d8d5cf;--card:#efede8;--ink:#17191c;--mute:#5a5f63;--s1:#b9bec2;--s2:#8e969b;--red:#d62a1f;--line:#17191c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111315;--card:#1b1e21;--ink:#ecebe7;--mute:#9aa1a6;--s1:#59616a;--s2:#3a4147;--red:#ff4a3d;--line:#ecebe7}}
+:root[data-theme="dark"]{--bg:#111315;--card:#1b1e21;--ink:#ecebe7;--mute:#9aa1a6;--s1:#59616a;--s2:#3a4147;--red:#ff4a3d;--line:#ecebe7}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Tajawal,system-ui,sans-serif;line-height:1.65}
+.wrap{max-width:880px;margin:0 auto;padding:18px 14px 56px}
+h1{font-family:Changa,Tajawal,sans-serif;font-weight:800;font-size:clamp(44px,15vw,104px);line-height:.95;margin:6px 0 10px;letter-spacing:-1px}
+.sub{margin:0 0 26px;color:var(--mute);max-width:46ch}
+.grid{display:grid;grid-template-columns:62px 1fr;gap:30px;align-items:start}
+.stack{position:sticky;top:calc(env(safe-area-inset-top,0px) + 10px);display:flex;flex-direction:column;gap:5px;border-inline:5px solid var(--s2);padding:6px 4px}
+.plate{position:relative;height:50px;border:0;border-radius:3px;cursor:pointer;font-family:Changa,sans-serif;font-weight:800;font-size:22px;color:var(--ink);background:linear-gradient(180deg,var(--s1),var(--s2));box-shadow:inset 0 2px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(0,0,0,.25)}
+.plate.rest{height:30px;font-size:13px;font-weight:500;background:repeating-linear-gradient(135deg,var(--s2) 0 6px,var(--s1) 6px 12px)}
+.plate::after{content:"";position:absolute;top:50%;left:-34px;width:0;height:8px;margin-top:-4px;background:var(--red);border-radius:4px 0 0 4px;transition:width .25s}
+.plate[aria-selected="true"]::after{width:44px}
+.plate[aria-selected="true"]{outline:2px solid var(--red);outline-offset:1px}
+button:focus-visible,summary:focus-visible,a:focus-visible,label:focus-within{outline:3px solid var(--red);outline-offset:2px}
+.head{position:relative;margin-bottom:16px;padding-bottom:10px;border-bottom:5px solid var(--line)}
+.head .big{font-family:Changa,sans-serif;font-weight:800;font-size:clamp(60px,20vw,130px);line-height:.8;color:transparent;-webkit-text-stroke:2px var(--s2);display:block;direction:ltr;text-align:right}
+.head h2{font-family:Changa,sans-serif;font-weight:800;font-size:clamp(32px,9vw,54px);margin:-14px 0 0;line-height:1}
+.head p{margin:4px 0 0;color:var(--mute)}
+.ex{background:var(--card);border:2px solid var(--line);margin-bottom:14px;display:grid}
+.ph{position:relative;aspect-ratio:16/10;background:repeating-linear-gradient(135deg,var(--s2) 0 2px,transparent 2px 12px),var(--card);display:grid;place-items:center;overflow:hidden;border-bottom:2px solid var(--line)}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#111}
+.ph label{display:none}
+.ph img+label{display:none}
+.ph input{display:none}
+.info{display:grid;grid-template-columns:1fr auto;gap:2px 14px;padding:12px 14px 6px;align-items:center}
+.k{font-family:Changa,sans-serif;font-weight:800;font-size:13px;color:var(--bg);background:var(--red);padding:0 8px;justify-self:start;grid-column:1}
+.nm{font-weight:700;font-size:19px;grid-column:1;line-height:1.3}
+.en{grid-column:1;color:var(--mute);font-size:13px;direction:ltr;text-align:right}
+.sr{grid-column:2;grid-row:1/4;font-family:Changa,sans-serif;font-weight:800;font-size:clamp(34px,10vw,52px);line-height:1;direction:ltr;text-align:center}
+.sr small{display:block;font-family:Tajawal,sans-serif;font-weight:500;font-size:11px;color:var(--mute);direction:rtl}
+.tip{padding:0 14px 12px}
+.tip summary{cursor:pointer;font-weight:700;padding:8px 0;border-top:1px solid var(--s2)}
+.tip p{margin:2px 0 6px}
+.tip .bad{border-inline-start:4px solid var(--red);padding-inline-start:10px}
+.links{display:flex;gap:14px;font-size:14px;padding-top:4px}
+.links a{color:var(--ink);font-weight:700}
+.restbox{border:2px solid var(--line);background:repeating-linear-gradient(135deg,transparent 0 10px,var(--s1) 10px 12px);padding:34px 16px;text-align:center}
+.restbox b{font-family:Changa,sans-serif;font-size:34px;background:var(--bg);padding:0 12px}
+.restbox p{background:var(--bg);display:inline-block;padding:2px 10px;margin:10px 0 0}
+.rules{margin-top:34px}
+.rules h3{font-family:Changa,sans-serif;font-size:30px;margin:0 0 10px}
+.rules div{border-inline-start:6px solid var(--red);padding:6px 12px;margin-bottom:8px;background:var(--card)}
+.note{margin-top:20px;color:var(--mute);font-size:13px}
+@media (prefers-reduced-motion:reduce){.plate::after{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>برنامج<br>الحديد</h1>
+<p class="sub">سبعة أيام على أجهزة Technogym، مع صور واقعية توضح شكل التمرين وطريقة أدائه.</p>
+<div class="grid">
+<div class="stack" id="stack" role="tablist" aria-label="أيام الأسبوع"></div>
+<div id="day"></div>
+</div>
+<section class="rules">
+<h3>قواعد الحديد</h3>
+<div><b>الإحماء:</b> 5 دقائق كارديو خفيف وجلسة خفيفة على أول تمرين.</div>
+<div><b>الراحة:</b> 60 إلى 90 ثانية بين الجلسات، و2 دقيقة لضغط الأرجل.</div>
+<div><b>الإيقاع:</b> ثانية للرفع وثلاث ثواني للنزول.</div>
+<div><b>التدرج:</b> وصلت لأعلى عدّات في كل الجلسات بتكنيك نظيف؟ زد الوزن قليلاً.</div>
+<div><b>الألم:</b> حرقان العضلة طبيعي، أما ألم المفصل فوقّف وغيّر الوضعية.</div>
+</section>
+<p class="note">الصور المعروضة صور فوتوغرافية من مواقع ومراجع رياضية خارجية؛ يلزم اتصال بالإنترنت لعرضها.</p>
+</div>
+<script>
+const D=[
+{d:"اليوم 1",n:"دفع",en:"Push",m:"صدر، أكتاف، ترايسبس",x:[
+["جهاز ضغط الصدر العلوي","Incline Chest Press","صدر علوي",3,"8-12","p","ظهرك ملزوق بالمسند، والمقابض عند أعلى الصدر. ادفع للأمام والكتفين للخلف، ونزّل ببطء.","لا تقفل الكوع بالكامل ولا ترفع الكتف لأذنك."],
+["جهاز فتح الصدر","Chest Fly / Pec Deck","صدر",3,"10-12","p","اضبط المقعد بحيث الكوع بمستوى الصدر. قرّب الذراعين كأنك تحضن شي، وثبّت ثانية.","لا تفتح لين تحس بشد حاد في مقدمة الكتف."],
+["جهاز ضغط الكتف","Shoulder Press","أكتاف",3,"8-10","p","المقبض بمستوى الكتف عند البداية. ادفع للأعلى مع شد البطن.","لا تقوّس أسفل الظهر ولا ترمي الوزن."],
+["تفتيح جانبي بالدامبل","Dumbbell Lateral Raise","كتف جانبي",3,"12","s","ميلة بسيطة للأمام، ارفع بالكوع مو باليد، وقف عند مستوى الكتف.","لا تتأرجح بجسمك، خفّف الوزن."],
+["تمرين الحبل للترايسبس","Triceps Pushdown","ترايسبس",3,"10-12","p","الكوع ثابت على جنبك. افرد الذراع كامل ثم ارجع ببطء لين زاوية 90.","لا تحرّك الكتف ولا تنحني فوق الحبل."]]},
+{d:"اليوم 2",n:"سحب",en:"Pull",m:"ظهر، أكتاف خلفية، بايسبس",x:[
+["السحب العالي الأمامي","Lat Pulldown","ظهر عريض",3,"8-12","l","امسك أوسع من الكتف شوي، اسحب البار لأعلى الصدر وفكّر إنك تنزّل الكوع للأسفل.","لا تتمايل للخلف ولا تسحب خلف الرقبة."],
+["جهاز السحب الأرضي","Seated Row","ظهر وسط",3,"10","l","صدر مرفوع، اسحب المقبض لجهة البطن واضغط لوحي الكتف ببعض ثانية.","لا تقوّس ظهرك للأمام عند الرجوع."],
+["سحب بمقبض ضيق أو مسند صلب","Close-Grip / Chest-Supported Row","سماكة الظهر",3,"10","l","ثبّت صدرك على المسند، اسحب والكوع قريب من الجسم، وقف ثانية.","لا ترفع صدرك عن المسند لتساعد الوزن."],
+["الأكتاف الخلفية","Reverse Fly / Cable Rear Delt","كتف خلفي",3,"12","s","ذراعين شبه مفرودة، افتح للجانب بتحريك لوحي الكتف. وزن خفيف.","لا ترفع الكتفين لجهة الأذن."],
+["باي بالكيبل","Cable Bicep Curl","بايسبس",3,"10-12","c","الكوع ثابت على جنبك، اطلع ببطء واعصر البايسبس بالأعلى، ونزّل 3 ثواني.","لا تتأرجح بجسمك لترفع الوزن."]]},
+{d:"اليوم 3",n:"أرجل",en:"Legs",m:"فخذ أمامي وخلفي، سمانة، بطن",x:[
+["جهاز ضغط الأرجل","Leg Press","فخذ أمامي",3,"10-12","g","القدمين بعرض الكتف وسط المنصة. نزّل لين الركبة 90 درجة، وادفع بالكعب.","لا ترفع الحوض عن المسند ولا تقفل الركبة."],
+["ثني الركبة","Seated / Lying Leg Curl","فخذ خلفي",3,"12","g","محور الركبة على محور الجهاز. اسحب بقوة ونزّل ببطء.","لا ترفع الورك عن المقعد."],
+["مد الأرجل","Leg Extension","فخذ أمامي",3,"12","g","افرد الرجل وثبّت ثانية بالأعلى، ونزّل ببطء.","لا ترمي الوزن بقوة."],
+["جهاز السمانة","Calf Raise","سمانة",4,"15","g","نزول كامل ثم اطلع على أطراف الأصابع وثبّت ثانية.","لا تعمل حركات سريعة قصيرة."],
+["جهاز البطن","Abdominal Crunch","بطن",3,"15","a","لفّ العمود الفقري بتقريب الصدر من الحوض، وأخرج الهواء عند الانقباض.","لا تسحب بالذراعين ولا بالفخذ."]]},
+{d:"اليوم 4",n:"راحة",en:"Rest",rest:1,t:"استشفاء تام. إذا تبي كارديو خفيف تقدر تتمشى مشي خفيف برا النادي."},
+{d:"اليوم 5",n:"علوي",en:"Upper",m:"تركيز خفيف ومرونة",x:[
+["ضغط بالدامبل بميل بسيط","Incline Dumbbell Press","صدر",3,"10","p","نزّل الدامبل لجنب الصدر والكوع بزاوية 45 درجة، وادفع لأعلى مع التقاء الدامبلين.","لا تنزّل أكثر من اللي يسمح به الكتف."],
+["T-Bar أو سحب حر","T-Bar / Free Row","ظهر",3,"10","l","ظهر مستقيم، اسحب نحو أسفل الصدر واعصر لوحي الكتف.","لا تستعمل زخم الجسم."],
+["تفتيح جانبي بالدامبل","Dumbbell Lateral Raise","كتف جانبي",3,"12","s","ارفع بالكوع لمستوى الكتف وانزل ببطء.","لا ترفع أعلى من الكتف."],
+["سوبرست باي + تراي بالكيبل","Cable Biceps + Triceps Superset","ذراعين",3,"جولات سريعة","c","سوّي حركة الباي وبدون راحة مباشرة حركة التراي، ثم ارتح 60 ثانية.","لا تضحّي بالتكنيك عشان السرعة."]]},
+{d:"اليوم 6",n:"سفلي",en:"Lower",m:"أرجل، خلفية، بطن وسمانة",x:[
+["ليج بريس بوضعيات مختلفة","Leg Press Variations","أرجل",4,"10","g","غيّر وضع القدمين: عالي للخلفية، واطي للأمامية، واسع للداخلية.","لا تقفل الركبة ولا ترفع الحوض."],
+["الخلفية والمؤخرة","Leg Curl / Glute Machine","خلفية ومؤخرة",3,"12","g","حركة بطيئة، اعصر العضلة بالنهاية وثبّت ثانية.","لا تتمايل بالظهر."],
+["جهاز البطن","Abdominal Crunch","بطن",3,"15","a","لفّ العمود الفقري وأخرج الهواء عند الانقباض.","لا تسحب بالذراعين."],
+["جهاز السمانة","Calf Raise","سمانة",3,"15","g","مدى كامل ووقفة ثانية بالأعلى.","لا تعمل حركات قصيرة سريعة."]]},
+{d:"اليوم 7",n:"راحة",en:"Rest",rest:1,t:"استشفاء تام. نوم كافي، ماء، وبروتين. جسمك يبني العضلة وقت الراحة."}
+];
+const st=document.getElementById('stack'),box=document.getElementById('day');
+const q=s=>encodeURIComponent(s);
+D.forEach((o,i)=>{const b=document.createElement('button');b.className='plate'+(o.rest?' rest':'');b.setAttribute('role','tab');b.setAttribute('aria-label',o.d+' '+o.n);b.textContent=o.rest?'راحة':i+1;b.onclick=()=>show(i);st.appendChild(b)});
+function get(k){try{return localStorage.getItem(k)}catch(e){return null}}
+const exercisePhotos={
+ "Incline Chest Press":"https://www.technogym.com/en-US/feed/images/MG15/pure-strength-incline-chest-press_MG15_grey.jpg",
+ "Chest Fly / Pec Deck":"https://i.ytimg.com/vi/re5b8m-FJio/maxresdefault.jpg",
+ "Shoulder Press":"https://cdn.muscleandstrength.com/sites/default/files/machine-shoulder-press.jpg",
+ "Dumbbell Lateral Raise":"https://app-media.fitbod.me/v2/65/images/landscape/0_960x540.jpg",
+ "Triceps Pushdown":"https://s3.amazonaws.com/prod.skimble/assets/2550234/image_iphone.jpg",
+ "Lat Pulldown":"https://www.trainheroic.com/wp-content/uploads/2023/03/AdobeStock_423445223-TH-jpg.webp",
+ "Seated Row":"https://cdn.muscleandstrength.com/sites/default/files/seated-cable-row.jpg",
+ "Close-Grip / Chest-Supported Row":"https://cdn.muscleandstrength.com/sites/default/files/seated-cable-row.jpg",
+ "Reverse Fly / Cable Rear Delt":"https://media.rirlift.com/web/machine-lateral-raise/poster.9774bf0024.webp",
+ "Cable Bicep Curl":"https://www.zing.coach/exercises/cable-bicep-curls.webp",
+ "Leg Press":"https://www.bftfitness.com/uploads/allimg/241211/1-241211140RN31.jpg",
+ "Seated / Lying Leg Curl":"https://titan.fitness/cdn/shop/files/401926_05.jpg?v=1739391629&width=1946",
+ "Leg Extension":"https://www.zing.coach/exercises/leg-extensions.webp",
+ "Calf Raise":"https://www.zing.coach/exercises/calf-raises-leg-press-45.webp",
+ "Abdominal Crunch":"https://ninepi.com/images/exercises/abdominal-crunch-machine-start.v2.webp",
+ "Incline Dumbbell Press":"https://i.ytimg.com/vi/oZVCBM9f8Eo/maxresdefault.jpg",
+ "T-Bar / Free Row":"https://cdn.muscleandstrength.com/sites/default/files/seated-cable-row.jpg",
+ "Cable Biceps + Triceps Superset":"https://s3.amazonaws.com/prod.skimble/assets/2550234/image_iphone.jpg",
+ "Leg Press Variations":"https://www.bftfitness.com/uploads/allimg/241211/1-241211140RN31.jpg",
+ "Leg Curl / Glute Machine":"https://titan.fitness/cdn/shop/files/401926_05.jpg?v=1739391629&width=1946"
+};
+function show(i){
+ [...st.children].forEach((b,j)=>b.setAttribute('aria-selected',j==i));
+ const o=D[i];
+ let h='<div class="head"><span class="big">0'+(i+1)+'</span><h2>'+o.n+'</h2><p>'+(o.m||'')+'</p></div>';
+ if(o.rest)h+='<div class="restbox"><b>راحة</b><br><p>'+o.t+'</p></div>';
+ else o.x.forEach((e,j)=>{const p=exercisePhotos[e[1]]||'';
+  h+='<article class="ex"><div class="ph">'+'<img src="'+p+'" alt="صورة واقعية لتمرين '+e[0]+'" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display=\'none\'"></div>'
+  +'<div class="info"><span class="k">'+e[2]+'</span><span class="nm">'+e[0]+'</span><span class="en">'+e[1]+'</span><span class="sr">'+e[3]+'×'+e[4]+'<small>جلسات × عدّات</small></span></div>'
+  +'<div class="tip"><details open><summary>التكنيك والأخطاء</summary><p>'+e[6]+'</p><p class="bad">'+e[7]+'</p></details><div class="links"><a href="https://www.google.com/search?tbm=isch&q='+q(e[1]+' technogym')+'" target="_blank" rel="noopener">صور حقيقية</a><a href="https://www.youtube.com/results?search_query='+q(e[1]+' proper form')+'" target="_blank" rel="noopener">فيديو</a></div></div></article>'});
+ box.innerHTML=h;
+}
+show(0);
+</script>
+</body>
+</html>
